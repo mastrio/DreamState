@@ -1,0 +1,124 @@
+[gd_scene load_steps=16 format=3 uid="uid://ukuu6hsygv18"]
+
+[ext_resource type="Texture2D" uid="uid://bxtbclnc4unfi" path="res://icon.svg" id="1_ys884"]
+[ext_resource type="Script" path="res://addons/dreamstate/custom_nodes/dream_machine.gd" id="1_yy5q0"]
+[ext_resource type="Script" path="res://test_game/idle_state.gd" id="2_osux7"]
+[ext_resource type="Script" path="res://test_game/moving_state.gd" id="3_jx8a6"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_22yw8"]
+radius = 30.1496
+
+[sub_resource type="Animation" id="Animation_xlqws"]
+resource_name = "Idle"
+loop_mode = 1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0.5, 0.5), Vector2(0.7, 0.7), Vector2(0.5, 0.5)]
+}
+
+[sub_resource type="Animation" id="Animation_f405j"]
+resource_name = "Moving"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 6.28319]
+}
+
+[sub_resource type="Animation" id="Animation_w8e40"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0.5, 0.5)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_3u5tr"]
+_data = {
+"Idle": SubResource("Animation_xlqws"),
+"Moving": SubResource("Animation_f405j"),
+"RESET": SubResource("Animation_w8e40")
+}
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_jaiav"]
+animation = &"Idle"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_15mrw"]
+animation = &"Moving"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_jxdnq"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_hfek5"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_clnrj"]
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_ng3n2"]
+states/Idle/node = SubResource("AnimationNodeAnimation_jaiav")
+states/Idle/position = Vector2(411.667, 92.3333)
+states/Moving/node = SubResource("AnimationNodeAnimation_15mrw")
+states/Moving/position = Vector2(651.667, 100.778)
+transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition_jxdnq"), "Idle", "Moving", SubResource("AnimationNodeStateMachineTransition_hfek5"), "Moving", "Idle", SubResource("AnimationNodeStateMachineTransition_clnrj")]
+
+[node name="Player" type="CharacterBody2D"]
+
+[node name="DreamMachine" type="Node" parent="." node_paths=PackedStringArray("state_tree")]
+script = ExtResource("1_yy5q0")
+state_tree = NodePath("../AnimationTree")
+
+[node name="Idle" type="Node" parent="DreamMachine"]
+script = ExtResource("2_osux7")
+
+[node name="Moving" type="Node" parent="DreamMachine"]
+script = ExtResource("3_jx8a6")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_22yw8")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_ys884")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_3u5tr")
+}
+
+[node name="AnimationTree" type="AnimationTree" parent="."]
+tree_root = SubResource("AnimationNodeStateMachine_ng3n2")
+anim_player = NodePath("../AnimationPlayer")
