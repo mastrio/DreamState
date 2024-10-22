@@ -1,8 +1,9 @@
-[gd_scene load_steps=16 format=3 uid="uid://ukuu6hsygv18"]
+[gd_scene load_steps=17 format=3 uid="uid://ukuu6hsygv18"]
 
 [ext_resource type="Texture2D" uid="uid://bxtbclnc4unfi" path="res://icon.svg" id="1_ys884"]
 [ext_resource type="Script" path="res://addons/dreamstate/custom_nodes/dream_machine.gd" id="1_yy5q0"]
 [ext_resource type="Script" path="res://test_game/idle_state.gd" id="2_osux7"]
+[ext_resource type="Script" path="res://test_game/test_component.gd" id="3_g01rr"]
 [ext_resource type="Script" path="res://test_game/moving_state.gd" id="3_jx8a6"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_22yw8"]
@@ -103,6 +104,9 @@ state_tree = NodePath("../AnimationTree")
 
 [node name="Idle" type="Node" parent="DreamMachine"]
 script = ExtResource("2_osux7")
+
+[node name="TestComponent" type="Node" parent="DreamMachine/Idle"]
+script = ExtResource("3_g01rr")
 
 [node name="Moving" type="Node" parent="DreamMachine"]
 script = ExtResource("3_jx8a6")

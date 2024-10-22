@@ -1,7 +1,7 @@
 extends DreamState
 
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	print("WOW YOUR MOVING!!!!!!!!!!!!!!!!")
 
 func _input(event: InputEvent) -> void:

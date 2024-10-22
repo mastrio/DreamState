@@ -13,7 +13,7 @@ config_version=5
 config/name="DreamState"
 run/main_scene="res://test_game/test.tscn"
 config/features=PackedStringArray("4.3")
-config/icon="res://icon.svg"
+config/icon="res://logo.svg"
 
 [editor_plugins]
 
