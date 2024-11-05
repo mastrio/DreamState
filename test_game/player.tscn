@@ -1,10 +1,14 @@
-[gd_scene load_steps=17 format=3 uid="uid://ukuu6hsygv18"]
+[gd_scene load_steps=21 format=3 uid="uid://ukuu6hsygv18"]
 
 [ext_resource type="Texture2D" uid="uid://bxtbclnc4unfi" path="res://icon.svg" id="1_ys884"]
-[ext_resource type="Script" path="res://addons/dreamstate/custom_nodes/dream_machine.gd" id="1_yy5q0"]
+[ext_resource type="Script" path="res://addons/dreamstate/custom_nodes/machines/dream_machine_tree.gd" id="1_yy5q0"]
+[ext_resource type="Script" path="res://addons/dreamstate/custom_nodes/groups/dream_state_group.gd" id="2_j62e6"]
 [ext_resource type="Script" path="res://test_game/idle_state.gd" id="2_osux7"]
 [ext_resource type="Script" path="res://test_game/test_component.gd" id="3_g01rr"]
 [ext_resource type="Script" path="res://test_game/moving_state.gd" id="3_jx8a6"]
+[ext_resource type="Script" path="res://addons/dreamstate/custom_nodes/groups/dream_component_group.gd" id="3_y1u8n"]
+[ext_resource type="Script" path="res://addons/dreamstate/custom_nodes/machines/dream_machine_manual.gd" id="7_j06y1"]
+[ext_resource type="Script" path="res://test_game/manual_idle.gd" id="8_a1os6"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_22yw8"]
 radius = 30.1496
@@ -98,18 +102,32 @@ transitions = ["Start", "Idle", SubResource("AnimationNodeStateMachineTransition
 
 [node name="Player" type="CharacterBody2D"]
 
-[node name="DreamMachine" type="Node" parent="." node_paths=PackedStringArray("state_tree")]
+[node name="DreamMachineTree" type="Node" parent="." node_paths=PackedStringArray("state_tree")]
 script = ExtResource("1_yy5q0")
 state_tree = NodePath("../AnimationTree")
 
-[node name="Idle" type="Node" parent="DreamMachine"]
+[node name="Idle" type="Node" parent="DreamMachineTree"]
 script = ExtResource("2_osux7")
 
-[node name="TestComponent" type="Node" parent="DreamMachine/Idle"]
+[node name="DreamComponentGroup" type="Node" parent="DreamMachineTree/Idle"]
+script = ExtResource("3_y1u8n")
+
+[node name="TestComponent" type="Node" parent="DreamMachineTree/Idle/DreamComponentGroup"]
 script = ExtResource("3_g01rr")
 
-[node name="Moving" type="Node" parent="DreamMachine"]
+[node name="DreamStateGroup" type="Node" parent="DreamMachineTree"]
+script = ExtResource("2_j62e6")
+
+[node name="Moving" type="Node" parent="DreamMachineTree/DreamStateGroup"]
 script = ExtResource("3_jx8a6")
+
+[node name="DreamMachineManual" type="Node" parent="."]
+script = ExtResource("7_j06y1")
+current_state = &"Idle"
+machine_enabled = false
+
+[node name="Idle" type="Node" parent="DreamMachineManual"]
+script = ExtResource("8_a1os6")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_22yw8")

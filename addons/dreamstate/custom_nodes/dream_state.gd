@@ -3,8 +3,7 @@ class_name DreamState
 extends Node
 
 
-var state_tree: AnimationTree
-var state_machine: AnimationNodeStateMachinePlayback
+var machine: DreamMachineBase
 
 var components: Array[DreamComponent]
 
@@ -12,7 +11,7 @@ var components: Array[DreamComponent]
 func _ready() -> void:
 	_register_state_to_machine()
 	_set_active(false)
-	_set_component_state_machines()
+	_set_component_machine()
 
 func _set_active(enable: bool) -> void:
 	set_process(enable)
@@ -29,7 +28,6 @@ func _register_state_to_machine() -> void:
 func _register_component(component: DreamComponent) -> void:
 	components.append(component)
 
-func _set_component_state_machines() -> void:
+func _set_component_machine() -> void:
 	for component: DreamComponent in components:
-		component.state_tree = state_tree
-		component.state_machine = state_tree.get("parameters/playback")
+		component.machine = machine

@@ -3,8 +3,7 @@ class_name DreamComponent
 extends Node
 
 
-var state_tree: AnimationTree
-var state_machine: AnimationNodeStateMachinePlayback
+var machine: DreamMachineBase
 
 
 func _ready() -> void:

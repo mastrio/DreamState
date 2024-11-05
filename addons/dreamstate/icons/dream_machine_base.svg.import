@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://v0cylig04awl"
-path="res://.godot/imported/dream_machine.svg-7268a2cdf3c295c56fb930f6620b835d.ctex"
+uid="uid://gf62qnv1p8vt"
+path="res://.godot/imported/dream_machine_base.svg-1a0437867c190d819833959533c46ee4.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/dreamstate/icons/dream_machine.svg"
-dest_files=["res://.godot/imported/dream_machine.svg-7268a2cdf3c295c56fb930f6620b835d.ctex"]
+source_file="res://addons/dreamstate/icons/dream_machine_base.svg"
+dest_files=["res://.godot/imported/dream_machine_base.svg-1a0437867c190d819833959533c46ee4.ctex"]
 
 [params]
 
