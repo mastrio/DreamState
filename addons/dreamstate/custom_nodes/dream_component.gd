@@ -8,7 +8,6 @@ var machine: DreamMachineBase
 
 func _ready() -> void:
 	_register_component_to_state()
-	_set_active(false)
 
 func _set_active(enable: bool) -> void:
 	set_process(enable)

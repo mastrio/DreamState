@@ -10,7 +10,6 @@ var components: Array[DreamComponent]
 
 func _ready() -> void:
 	_register_state_to_machine()
-	_set_active(false)
 	_set_component_machine()
 
 func _set_active(enable: bool) -> void:
